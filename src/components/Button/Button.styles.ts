@@ -14,8 +14,22 @@ export const styles = StyleSheet.create({
   text: {
     color: 'white',
   },
-  primary: {},
   secondary: {
     backgroundColor: '#4681A3',
+  },
+  text_secondary: {
+    color: 'white',
+  },
+  unstyled: {
+    backgroundColor: 'transparent',
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
+  text_unstyled: {
+    color: '#403572',
+    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
   },
 })

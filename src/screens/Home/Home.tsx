@@ -2,9 +2,11 @@ import Button from '@components/Button/Button'
 import type { StackScreenProps } from '@react-navigation/stack'
 import { Image, Text, View } from 'react-native'
 
+import { navigationType } from '../../../App'
+
 import { styles } from './Home.styles'
 
-const Home = ({ navigation }: StackScreenProps<any>) => {
+const Home = ({ navigation }: StackScreenProps<navigationType, 'Home'>) => {
   return (
     <View style={styles.home}>
       <View style={styles.imageWrapper}>
@@ -14,7 +16,7 @@ const Home = ({ navigation }: StackScreenProps<any>) => {
         <Text style={styles.heading}>Best task management app</Text>
         <Text style={styles.text}>Get organized by sorting out all your tasks and boost your productivity.</Text>
         <View style={styles.buttons}>
-          <Button onPress={() => {}}>Log in</Button>
+          <Button onPress={() => navigation.navigate('SignIn')}>Log in</Button>
           <Button type="secondary" onPress={() => {}}>
             Get started
           </Button>
