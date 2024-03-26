@@ -9,6 +9,17 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
   },
+  label: {
+    color: 'white',
+    margin: 20,
+    marginLeft: 0,
+  },
+  errorContainer: {
+    marginTop: 4,
+  },
+  error: {
+    color: '#980300',
+  },
 })
 
 export const placeHolderColor = '#707070'

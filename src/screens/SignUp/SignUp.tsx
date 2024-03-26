@@ -2,7 +2,8 @@ import Button from '@components/Button/Button'
 import Input from '@components/Input/Input'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FC } from 'react'
-import { KeyboardAvoidingView, Text, View } from 'react-native'
+import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
+import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native'
 
 import { navigationType } from '../../../App'
 
@@ -10,48 +11,85 @@ import { styles } from './SignUp.styles'
 
 interface SignInProps extends StackScreenProps<navigationType, 'SignUp'> {}
 
+type FormValues = {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
 const SignUp: FC<SignInProps> = ({ navigation }) => {
+  const { ...methods } = useForm<FormValues>({ mode: 'onChange' })
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => console.log({ data })
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log({ errors })
+  }
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.heading}>Join the hub!</Text>
-      <View style={styles.inputes}>
-        <Input placeholder="First Name" onChangeText={(text) => console.log(text)} />
-        <Input placeholder="Last Name" onChangeText={(text) => console.log(text)} />
-        <Input
-          autoCapitalize="none"
-          keyboardType="email-address"
-          inputMode="email"
-          placeholder="Email"
-          onChangeText={(text) => console.log(text)}
-          spellCheck={false}
-        />
-        <Input
-          autoCapitalize="none"
-          spellCheck={false}
-          autoComplete="off"
-          secureTextEntry
-          placeholder="Password"
-          onChangeText={(text) => console.log(text)}
-        />
-        <Input
-          autoCapitalize="none"
-          autoComplete="off"
-          secureTextEntry
-          placeholder="Confirm Password"
-          onChangeText={(text) => console.log(text)}
-          spellCheck={false}
-        />
-      </View>
-      <Button type="secondary" onPress={() => {}}>
-        Create account
-      </Button>
-      <Text style={styles.register}>
-        Already registered?&nbsp;
-        <Text onPress={() => navigation.navigate('SignIn')} style={styles.registerLink}>
-          Sign in!
-        </Text>
-      </Text>
-    </KeyboardAvoidingView>
+    <ScrollView>
+      <KeyboardAvoidingView style={styles.container}>
+        <FormProvider {...methods}>
+          <Text style={styles.heading}>Join the hub!</Text>
+          <View style={styles.inputes}>
+            <Input placeholder="First name" name="firstName" rules={{ required: 'First name is required!' }} />
+            <Input placeholder="Last name" name="lastName" rules={{ required: 'Last name is required!' }} />
+            <Input
+              name="email"
+              placeholder="Email"
+              keyboardType="email-address"
+              rules={{
+                required: 'Email is required!',
+                pattern: {
+                  value: /\b[\w\\.+-]+@[\w\\.-]+\.\w{2,4}\b/,
+                  message: 'Must be formatted: john.doe@email.com',
+                },
+              }}
+              autoCapitalize="none"
+              inputMode="email"
+              spellCheck={false}
+            />
+
+            <Input
+              autoCapitalize="none"
+              autoComplete="off"
+              spellCheck={false}
+              secureTextEntry
+              placeholder="Password"
+              name="password"
+              rules={{ required: 'Password is required!' }}
+            />
+            <Input
+              autoCapitalize="none"
+              autoComplete="off"
+              spellCheck={false}
+              secureTextEntry
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              rules={{
+                required: "Confirm password can't be empty!",
+                validate: (value, fields) => {
+                  if (value !== fields.password) {
+                    return 'Confirm password should be the same!'
+                  }
+                },
+              }}
+            />
+          </View>
+          <Button type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
+            Create account
+          </Button>
+          <Text style={styles.register}>
+            Already registered?&nbsp;
+            <Text onPress={() => navigation.navigate('SignIn')} style={styles.registerLink}>
+              Sign in!
+            </Text>
+          </Text>
+        </FormProvider>
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 
