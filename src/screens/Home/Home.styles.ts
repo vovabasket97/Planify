@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 34,
     letterSpacing: 0.36,
-    color: '#173147',
+    color: configStyles.colors.heading,
     marginBottom: configStyles.attractionsGrid.gap,
   },
   text: {
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
     letterSpacing: -0.24,
-    color: '#8B97A8',
+    color: configStyles.colors.text.light,
   },
   buttons: {
     marginTop: 40,

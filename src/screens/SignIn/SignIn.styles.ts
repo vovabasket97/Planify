@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 34,
     letterSpacing: 0.36,
-    color: '#173147',
+    color: configStyles.colors.heading,
     marginBottom: 36,
   },
   inputes: {
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   register: {
     marginTop: 36,
     textAlign: 'center',
-    color: '#8B97A8',
+    color: configStyles.colors.text.light,
     fontWeight: '400',
     fontSize: 15,
     lineHeight: 20,
@@ -29,6 +29,6 @@ export const styles = StyleSheet.create({
   },
   registerLink: {
     fontWeight: '700',
-    color: '#403572',
+    color: configStyles.colors.link,
   },
 })

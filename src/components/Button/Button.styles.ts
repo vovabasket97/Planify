@@ -1,3 +1,4 @@
+import { configStyles } from '@configs/style'
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
@@ -7,26 +8,26 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#403572',
+    backgroundColor: configStyles.colors.button.primaryBg,
     borderRadius: 10,
     textAlign: 'center',
   },
   text: {
-    color: 'white',
+    color: configStyles.colors.button.text,
   },
   secondary: {
-    backgroundColor: '#4681A3',
+    backgroundColor: configStyles.colors.button.secondaryBg,
   },
   text_secondary: {
-    color: 'white',
+    color: configStyles.colors.button.text,
   },
   unstyled: {
-    backgroundColor: 'transparent',
+    backgroundColor: configStyles.colors.button.unstyledBg,
     paddingVertical: 0,
     paddingHorizontal: 0,
   },
   text_unstyled: {
-    color: '#403572',
+    color: configStyles.colors.button.unstyledText,
     fontWeight: '700',
     fontSize: 15,
     lineHeight: 20,

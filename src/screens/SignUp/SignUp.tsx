@@ -1,9 +1,10 @@
 import Button from '@components/Button/Button'
+import Checkbox from '@components/Checkbox/Checkbox'
 import Input from '@components/Input/Input'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FC } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from 'react-native'
 
 import { navigationType } from '../../../App'
 
@@ -17,10 +18,16 @@ type FormValues = {
   email: string
   password: string
   confirmPassword: string
+  privacy: boolean
 }
 
 const SignUp: FC<SignInProps> = ({ navigation }) => {
-  const { ...methods } = useForm<FormValues>({ mode: 'onChange' })
+  const { ...methods } = useForm<FormValues>({
+    mode: 'onChange',
+    defaultValues: {
+      privacy: false,
+    },
+  })
 
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log({ data })
 
@@ -77,6 +84,13 @@ const SignUp: FC<SignInProps> = ({ navigation }) => {
                 },
               }}
             />
+            <Checkbox name="privacy" rules={{ required: 'Privacy checkbox is required!' }}>
+              <Text>
+                I agree to&nbsp;
+                <Text>Terms and Conditions</Text> and&nbsp;
+                <Text>Privacy policy</Text>
+              </Text>
+            </Checkbox>
           </View>
           <Button type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
             Create account
