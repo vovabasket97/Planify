@@ -2,6 +2,17 @@ import { configStyles } from '@configs/style'
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+    flex: 1,
+  },
+  checkboxContainer: {
+    width: '100%',
+    gap: 8,
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
   container: {
     borderWidth: 1,
     borderRadius: 4,
@@ -22,10 +33,5 @@ export const styles = StyleSheet.create({
   },
   error: {
     color: configStyles.colors.input.error,
-  },
-  checkboxContainer: {
-    width: '100%',
-    gap: 8,
-    flexDirection: 'row',
   },
 })

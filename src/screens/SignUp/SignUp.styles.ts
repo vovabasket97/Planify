@@ -31,4 +31,14 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     color: configStyles.colors.link,
   },
+  terms: {
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 20,
+    letterSpacing: -0.24,
+    color: configStyles.colors.text.light,
+  },
+  underline: {
+    textDecorationLine: 'underline',
+  },
 })

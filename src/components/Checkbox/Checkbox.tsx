@@ -17,7 +17,7 @@ const ControlledCheckbox: FC<CheckboxProps> = (props) => {
   const hasError = Boolean(formState?.errors[name])
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Pressable onPress={() => field.onChange(!field.value)} style={styles.checkboxContainer}>
         <View style={styles.container}>{field.value && <View style={styles.innerSquare} />}</View>
         {children}

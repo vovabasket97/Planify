@@ -1,10 +1,11 @@
 import Button from '@components/Button/Button'
 import Checkbox from '@components/Checkbox/Checkbox'
 import Input from '@components/Input/Input'
+import { privacy_policy, terms_and_conditions } from '@configs/links'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FC } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Linking, Pressable, ScrollView, Text, View } from 'react-native'
 
 import { navigationType } from '../../../App'
 
@@ -85,10 +86,15 @@ const SignUp: FC<SignInProps> = ({ navigation }) => {
               }}
             />
             <Checkbox name="privacy" rules={{ required: 'Privacy checkbox is required!' }}>
-              <Text>
+              <Text style={styles.terms}>
                 I agree to&nbsp;
-                <Text>Terms and Conditions</Text> and&nbsp;
-                <Text>Privacy policy</Text>
+                <Text onPress={() => Linking.openURL(terms_and_conditions)} style={styles.underline}>
+                  Terms and Conditions
+                </Text>{' '}
+                and&nbsp;
+                <Text onPress={() => Linking.openURL(privacy_policy)} style={styles.underline}>
+                  Privacy policy
+                </Text>
               </Text>
             </Checkbox>
           </View>
