@@ -11,8 +11,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   // Handle user state changes
   const onAuthStateChanged = useCallback(
-    (user: IUser) => {
-      setUser(user)
+    (useData: IUser) => {
+      setUser(useData)
       if (initializing) setInitializing(false)
     },
     [initializing]
