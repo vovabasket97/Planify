@@ -1,15 +1,15 @@
 import Button from '@components/Button/Button'
 import Input from '@components/Input/Input'
+import auth from '@react-native-firebase/auth'
 import { StackScreenProps } from '@react-navigation/stack'
+import { commonNavigationType } from '@screens/CommonRoutes'
 import { FC } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native'
-
-import { navigationType } from '../../../App'
+import { Alert, KeyboardAvoidingView, ScrollView, Text, View } from 'react-native'
 
 import { styles } from './SignIn.styles'
 
-interface SignInProps extends StackScreenProps<navigationType, 'SignIn'> {}
+interface SignInProps extends StackScreenProps<commonNavigationType, 'SignIn'> {}
 
 type FormValues = {
   email: string
@@ -19,7 +19,21 @@ type FormValues = {
 const SignIn: FC<SignInProps> = ({ navigation }) => {
   const { ...methods } = useForm<FormValues>({ mode: 'onChange' })
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log({ data })
+  const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    await auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .catch((error) => {
+        if (error.code === 'auth/invalid-email') {
+          Alert.alert('The email address is badly formatted')
+        } else if (error.code === 'auth/invalid-credential') {
+          Alert.alert('The supplied auth credential is malformed or has expired')
+        } else {
+          Alert.alert('Something went wrong!')
+        }
+
+        console.error(error)
+      })
+  }
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
     return console.log({ errors })

@@ -1,12 +1,11 @@
 import Button from '@components/Button/Button'
 import type { StackScreenProps } from '@react-navigation/stack'
+import { commonNavigationType } from '@screens/CommonRoutes'
 import { Image, Text, View } from 'react-native'
 
-import { navigationType } from '../../../App'
+import { styles } from './Welcome.styles'
 
-import { styles } from './Home.styles'
-
-const Home = ({ navigation }: StackScreenProps<navigationType, 'Home'>) => {
+const Welcome = ({ navigation }: StackScreenProps<commonNavigationType, 'Welcome'>) => {
   return (
     <View style={styles.home}>
       <View style={styles.imageWrapper}>
@@ -26,4 +25,4 @@ const Home = ({ navigation }: StackScreenProps<navigationType, 'Home'>) => {
   )
 }
 
-export default Home
+export default Welcome

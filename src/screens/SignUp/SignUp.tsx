@@ -2,16 +2,16 @@ import Button from '@components/Button/Button'
 import Checkbox from '@components/Checkbox/Checkbox'
 import Input from '@components/Input/Input'
 import { privacy_policy, terms_and_conditions } from '@configs/links'
+import auth from '@react-native-firebase/auth'
 import { StackScreenProps } from '@react-navigation/stack'
+import { commonNavigationType } from '@screens/CommonRoutes'
 import { FC } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { KeyboardAvoidingView, Linking, Pressable, ScrollView, Text, View } from 'react-native'
-
-import { navigationType } from '../../../App'
+import { Alert, KeyboardAvoidingView, Linking, Pressable, ScrollView, Text, View } from 'react-native'
 
 import { styles } from './SignUp.styles'
 
-interface SignInProps extends StackScreenProps<navigationType, 'SignUp'> {}
+interface SignInProps extends StackScreenProps<commonNavigationType, 'SignUp'> {}
 
 type FormValues = {
   firstName: string
@@ -30,7 +30,28 @@ const SignUp: FC<SignInProps> = ({ navigation }) => {
     },
   })
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log({ data })
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+    console.log({ data })
+
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(async () => {
+        await auth().currentUser?.updateProfile({
+          displayName: [data.firstName, data.lastName].join(' '),
+        })
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert('That email address is already in use!')
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          Alert.alert('That email address is invalid!')
+        }
+
+        console.error(error)
+      })
+  }
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
     return console.log({ errors })

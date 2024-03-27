@@ -1,12 +1,7 @@
-import withMainProvider from '@providers/MainProvider'
+import AuthProvider from '@providers/AuthProvider'
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import Home from '@screens/Home/Home'
-import SignIn from '@screens/SignIn/SignIn'
-import SignUp from '@screens/SignUp/SignUp'
+import AuthRoutes from '@screens/auth/AuthRoutes'
 import 'react-native-gesture-handler'
-
-const Stack = createStackNavigator()
 
 const navigationTheme = {
   ...DefaultTheme,
@@ -16,20 +11,12 @@ const navigationTheme = {
   },
 }
 
-export type navigationType = {
-  Home?: {}
-  SignIn?: {}
-  SignUp?: {}
-}
-
 function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-        <Stack.Screen name="Home" component={withMainProvider({ WrappedComponent: Home })} />
-        <Stack.Screen name="SignIn" component={withMainProvider({ WrappedComponent: SignIn })} />
-        <Stack.Screen name="SignUp" component={withMainProvider({ WrappedComponent: SignUp })} />
-      </Stack.Navigator>
+      <AuthProvider>
+        <AuthRoutes />
+      </AuthProvider>
     </NavigationContainer>
   )
 }
