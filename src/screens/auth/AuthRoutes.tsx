@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import CalendarIcon from '@assets/TabCalendarIcon'
 import HomeIcon from '@assets/TabHomeIcon'
 import withMainProvider from '@providers/MainProvider'
