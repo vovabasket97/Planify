@@ -31,8 +31,6 @@ const SignUp: FC<SignInProps> = ({ navigation }) => {
   })
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log({ data })
-
     auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(async () => {

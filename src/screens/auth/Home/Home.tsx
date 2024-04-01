@@ -1,16 +1,7 @@
-import auth from '@react-native-firebase/auth'
-import { FC } from 'react'
+import { logOut } from '@utils/auth/logout'
 import { Text } from 'react-native'
 
-interface HomeProps {}
-
-const Home: FC<HomeProps> = () => {
-  const logOut = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'))
-  }
-
+const Home = () => {
   return (
     <>
       <Text>Home</Text>
