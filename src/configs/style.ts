@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
   purple: '#403572',
   darkBlue: '#4681A3',
   white: 'white',
@@ -7,6 +7,7 @@ const colors = {
   error: '#980300',
   grayLight: '#E7E7E7',
   grayDark: '#707070',
+  inActive: '#ADAFB6',
 }
 
 export const configStyles = {
@@ -46,5 +47,6 @@ export const configStyles = {
       light: '#8B97A8',
     },
     link: colors.purple,
+    header: colors.darkBlue,
   },
 }

@@ -1,5 +1,5 @@
 import { privacy_policy, terms_and_conditions } from '@configs/links'
-import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
+import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer'
 import { logOut } from '@utils/auth/logout'
 import { Linking, Text } from 'react-native'
 
@@ -7,11 +7,11 @@ import { styles } from './DrawerContent.styles'
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView style={styles.container} {...props}>
       <Text style={styles.link} onPress={() => props.navigation.navigate('Home')}>
         Home
       </Text>
-      <Text style={styles.link} onPress={() => props.navigation.navigate('AddTask')}>
+      <Text style={styles.link} onPress={() => props.navigation.navigate('Tasks')}>
         Tasks
       </Text>
       <Text style={styles.link} onPress={() => Linking.openURL(privacy_policy)}>

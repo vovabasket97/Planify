@@ -1,6 +1,6 @@
 import Button from '@components/Button/Button'
+import { commonNavigationType } from '@configs/routes'
 import type { StackScreenProps } from '@react-navigation/stack'
-import { commonNavigationType } from '@screens/CommonRoutes'
 import { Image, Text, View } from 'react-native'
 
 import { styles } from './Welcome.styles'
