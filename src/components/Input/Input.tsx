@@ -8,6 +8,7 @@ interface TextInputProps extends RNTextInputProps, UseControllerProps {
   name: string
   defaultValue?: string
   variant?: 'default' | 'filled'
+  disableInputListeners?: boolean
 }
 
 interface InputProps extends TextInputProps {}

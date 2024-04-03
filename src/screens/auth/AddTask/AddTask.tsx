@@ -1,10 +1,14 @@
 import Button from '@components/Button/Button'
+import CategoryList from '@components/CategoryList/CategoryList'
+import Datepicker from '@components/DatePicker/Datepicker'
+import FormControlledElement from '@components/FormControlledElement'
 import Input from '@components/Input/Input'
 import Label from '@components/Label/Label'
 import Title from '@components/Title/Title'
-import { FC } from 'react'
+import { categories, categoriesEnum } from '@configs/categories'
+import { FC, useState } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { styles } from './AddTask.styles'
 
@@ -12,13 +16,17 @@ interface AddTaskProps {}
 
 type FormValues = {
   description: string
-  type: string
-  deadline: string
+  deadline: string | Date
+  category: categoriesEnum
 }
 
 const AddTask: FC<AddTaskProps> = () => {
+  const [open, setOpen] = useState(false)
   const { ...methods } = useForm<FormValues>({
     mode: 'onChange',
+    defaultValues: {
+      deadline: new Date(),
+    },
   })
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
@@ -37,10 +45,19 @@ const AddTask: FC<AddTaskProps> = () => {
           <Input variant="default" placeholder="Type here..." name="description" rules={{ required: 'Description is required!' }} />
         </Label>
         <Label label="Type">
-          <Text>TEST 123</Text>
+          <FormControlledElement
+            name="category"
+            defaultValue={categoriesEnum.quick}
+            renderItem={({ value }) => (
+              <CategoryList categories={categories} selectedCategory={value} onPress={(item) => methods.setValue('category', item)} />
+            )}
+          />
         </Label>
         <Label label="Deadline">
-          <Text>TEST 123</Text>
+          <FormControlledElement
+            name="deadline"
+            renderItem={({ value }) => <Datepicker date={value} setDate={(date) => methods.setValue('deadline', date)} />}
+          />
         </Label>
         <Button style={styles.btn} type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
           Add the task
