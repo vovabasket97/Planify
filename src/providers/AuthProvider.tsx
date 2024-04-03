@@ -1,21 +1,22 @@
+import { AuthContext } from '@context/AuthContext'
 import auth from '@react-native-firebase/auth'
 import CommonRoutes from '@screens/CommonRoutes'
-import { FC, PropsWithChildren, useCallback, useEffect, useState } from 'react'
+import { FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react'
 import { IUser } from 'types'
 
 interface AuthProviderProps extends PropsWithChildren {}
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState<IUser | null>(null)
+  const { user, setUser } = useContext(AuthContext)
 
   // Handle user state changes
   const onAuthStateChanged = useCallback(
     (useData: IUser) => {
-      setUser(useData)
+      if (setUser) setUser(useData)
       if (initializing) setInitializing(false)
     },
-    [initializing]
+    [initializing, setUser]
   )
 
   useEffect(() => {

@@ -7,6 +7,7 @@
       "@UI/*": ["components/ui/*"],
       "@screens/*": ["screens/*"],
       "@components/*": ["components/*"],
+      "@context/*": ["context/*"],
       "@hooks/*": ["hooks/*"],
       "@utils/*": ["utils/*"],
       "@assets/*": ["assets/*"],

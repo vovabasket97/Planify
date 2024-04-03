@@ -1,3 +1,4 @@
+import AuthContextComponent from '@context/AuthContext'
 import AuthProvider from '@providers/AuthProvider'
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import AuthRoutes from '@screens/auth/AuthRoutes'
@@ -14,9 +15,11 @@ const navigationTheme = {
 function App(): React.JSX.Element {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AuthProvider>
-        <AuthRoutes />
-      </AuthProvider>
+      <AuthContextComponent>
+        <AuthProvider>
+          <AuthRoutes />
+        </AuthProvider>
+      </AuthContextComponent>
     </NavigationContainer>
   )
 }

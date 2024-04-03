@@ -2,9 +2,12 @@ import FloatPlus from '@components/FloatPlus/FloatPlus'
 import Header from '@components/Header/Header'
 import { routesTitle } from '@configs/routes'
 import { colors, configStyles } from '@configs/style'
+import { AuthContext } from '@context/AuthContext'
+import auth from '@react-native-firebase/auth'
 import { useRoute } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, useColorScheme } from 'react-native'
+import { useContext } from 'react'
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 interface MainProviderProps {
@@ -17,6 +20,8 @@ const withMainProvider = ({ WrappedComponent, useContainer, useHeader }: MainPro
   return (props: StackScreenProps<any>) => {
     const isDarkMode = useColorScheme() === 'dark'
     const route = useRoute()
+    const { user } = useContext(AuthContext)
+
     const isAddTaskRoute = route.name === 'AddTask'
 
     const backgroundStyle = {
@@ -26,7 +31,7 @@ const withMainProvider = ({ WrappedComponent, useContainer, useHeader }: MainPro
     return (
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-        {!isAddTaskRoute && <FloatPlus />}
+        {!isAddTaskRoute && user && <FloatPlus />}
         <View style={[backgroundStyle, useContainer && styles.container, { backgroundColor: isDarkMode ? Colors.black : Colors.white }]}>
           {useHeader && <Header routeName={route.name as keyof typeof routesTitle} isAddTaskRoute={isAddTaskRoute} />}
           <ScrollView showsVerticalScrollIndicator={false} style={[styles.scrollWrapper, useContainer && styles.scrollContainer]}>

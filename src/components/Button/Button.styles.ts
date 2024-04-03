@@ -14,12 +14,20 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: configStyles.colors.button.text,
+    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
   },
   secondary: {
     backgroundColor: configStyles.colors.button.secondaryBg,
   },
   text_secondary: {
     color: configStyles.colors.button.text,
+    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: -0.24,
   },
   unstyled: {
     backgroundColor: configStyles.colors.button.unstyledBg,

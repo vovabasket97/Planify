@@ -1,5 +1,6 @@
 export const colors = {
   purple: '#403572',
+  havyBlue: '#173147',
   darkBlue: '#4681A3',
   white: 'white',
   black: 'black',
@@ -42,11 +43,12 @@ export const configStyles = {
       innnerBg: colors.purple,
       bg: colors.white,
     },
-    heading: '#173147',
+    heading: colors.havyBlue,
     text: {
       light: '#8B97A8',
+      title: colors.purple,
     },
     link: colors.purple,
-    header: colors.darkBlue,
+    header: colors.purple,
   },
 }

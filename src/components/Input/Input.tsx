@@ -7,6 +7,7 @@ import { placeHolderColor, styles } from './Input.styles'
 interface TextInputProps extends RNTextInputProps, UseControllerProps {
   name: string
   defaultValue?: string
+  variant?: 'default' | 'filled'
 }
 
 interface InputProps extends TextInputProps {}
@@ -15,7 +16,7 @@ const ControlledInput = (props: TextInputProps) => {
   const formContext = useFormContext()
   const { formState } = formContext
 
-  const { name, rules, defaultValue, ...inputProps } = props
+  const { name, rules, defaultValue, variant, ...inputProps } = props
 
   const { field } = useController({ name, rules, defaultValue })
 
@@ -25,7 +26,7 @@ const ControlledInput = (props: TextInputProps) => {
     <View>
       <RNTextInput
         placeholderTextColor={placeHolderColor}
-        style={styles.input}
+        style={[styles.input, styles[variant ?? 'filled']]}
         onChangeText={field.onChange}
         onBlur={field.onBlur}
         value={field.value}

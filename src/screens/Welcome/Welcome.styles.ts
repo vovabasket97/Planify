@@ -4,15 +4,12 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   home: {
     flexDirection: 'column',
-    height: '100%',
   },
   imageWrapper: {
-    flex: 1,
     marginBottom: -30,
   },
   image: {
     width: '100%',
-    height: '100%',
   },
   wrapper: {
     borderTopLeftRadius: 30,
