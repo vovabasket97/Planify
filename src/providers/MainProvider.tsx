@@ -34,7 +34,14 @@ const withMainProvider = ({ WrappedComponent, useContainer, useHeader, useScroll
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
         {!isAddTaskRoute && user && <FloatPlus />}
-        <View style={[backgroundStyle, useContainer && styles.container, { backgroundColor: isDarkMode ? Colors.black : Colors.white }]}>
+        <View
+          style={[
+            backgroundStyle,
+            styles.container,
+            useContainer && styles.margins,
+            { backgroundColor: isDarkMode ? Colors.black : Colors.white },
+          ]}
+        >
           {useHeader && (
             <Header
               style={!useContainer && styles.margins}
@@ -43,7 +50,7 @@ const withMainProvider = ({ WrappedComponent, useContainer, useHeader, useScroll
             />
           )}
           <InnerTag showsVerticalScrollIndicator={false} style={[styles.scrollWrapper, useContainer && styles.scrollContainer]}>
-            <View style={[useContainer && styles.innerScrollContainer]}>
+            <View style={[styles.innerScrollContainer]}>
               <WrappedComponent {...props} />
             </View>
           </InnerTag>
@@ -56,10 +63,8 @@ const withMainProvider = ({ WrappedComponent, useContainer, useHeader, useScroll
 const styles = StyleSheet.create({
   margins: {
     paddingHorizontal: configStyles.container.padding.horizontal,
-    marginTop: configStyles.container.padding.vertical,
   },
   container: {
-    paddingHorizontal: configStyles.container.padding.horizontal,
     paddingTop: configStyles.container.padding.vertical,
     height: '100%',
     flexGrow: 1,

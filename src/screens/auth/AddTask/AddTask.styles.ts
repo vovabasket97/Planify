@@ -1,3 +1,4 @@
+import { configStyles } from '@configs/style'
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
@@ -7,6 +8,9 @@ export const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 8,
+  },
+  margins: {
+    paddingHorizontal: configStyles.container.padding.horizontal,
   },
   btn: {
     marginTop: 20,

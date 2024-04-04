@@ -63,20 +63,25 @@ const AddTask: FC<AddTaskProps> = ({ navigation }) => {
   return (
     <FormProvider {...methods}>
       <View style={styles.container}>
-        <Title style={styles.title}>Add New Task</Title>
-        <Label label="Describe the task">
+        <Title style={[styles.title, styles.margins]}>Add New Task</Title>
+        <Label style={styles.margins} label="Describe the task">
           <Input variant="default" placeholder="Type here..." name="description" rules={{ required: 'Description is required!' }} />
         </Label>
-        <Label label="Type">
+        <Label styleLabel={styles.margins} label="Type">
           <FormControlledElement
             name="category"
             defaultValue={categoriesEnum.business}
             renderItem={({ value }) => (
-              <CategoryList categories={categories} selectedCategory={value} onPress={(item) => methods.setValue('category', item)} />
+              <CategoryList
+                style={styles.margins}
+                categories={categories}
+                selectedCategory={value}
+                onPress={(item) => methods.setValue('category', item)}
+              />
             )}
           />
         </Label>
-        <Label label="Deadline">
+        <Label style={styles.margins} label="Deadline">
           <FormControlledElement
             name="deadline"
             rules={{
@@ -90,9 +95,11 @@ const AddTask: FC<AddTaskProps> = ({ navigation }) => {
             renderItem={({ value }) => <Datepicker date={value} setDate={(date) => methods.setValue('deadline', date)} />}
           />
         </Label>
-        <Button loading={isLoading} style={styles.btn} type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
-          Add the task
-        </Button>
+        <View style={styles.margins}>
+          <Button loading={isLoading} style={styles.btn} type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
+            Add the task
+          </Button>
+        </View>
       </View>
     </FormProvider>
   )

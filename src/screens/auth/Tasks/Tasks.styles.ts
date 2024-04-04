@@ -2,15 +2,21 @@ import { configStyles } from '@configs/style'
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
+  wrapper: {
+    height: '100%',
+  },
   container: {
     flexDirection: 'column',
     gap: 36,
+  },
+  content: {
+    paddingBottom: configStyles.container.padding.vertical,
   },
   margins: {
     paddingHorizontal: configStyles.container.padding.horizontal,
   },
   list: {
-    marginBottom: 8,
+    paddingBottom: 8,
     paddingHorizontal: configStyles.container.padding.horizontal,
   },
   noFound: {

@@ -20,9 +20,7 @@ const TasksProvider: FC<TasksProviderProps> = ({ children }) => {
   useEffect(() => {
     setLoading(true)
 
-    let ref = firestore().collection('Tasks').where('userId', '==', user?.uid)
-
-    if (category !== categoriesEnum.all) ref = ref.where('category', '==', category)
+    const ref = firestore().collection('Tasks').where('userId', '==', user?.uid)
 
     const subscriber = ref.onSnapshot(
       (documentSnapshot) => {

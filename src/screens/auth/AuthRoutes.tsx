@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator()
 
 const HomeComponent = withMainProvider({ WrappedComponent: Home, useContainer: true, useHeader: true })
 const TasksComponent = withMainProvider({ WrappedComponent: Tasks, useContainer: false, useHeader: true, useScrollView: false })
-const AddTasksComponent = withMainProvider({ WrappedComponent: AddTask, useContainer: true, useHeader: true })
+const AddTasksComponent = withMainProvider({ WrappedComponent: AddTask, useContainer: false, useHeader: true })
 
 const TabsComponent = memo(() => (
   <Tab.Navigator

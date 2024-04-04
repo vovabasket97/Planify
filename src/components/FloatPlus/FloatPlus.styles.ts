@@ -14,6 +14,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 28,
     bottom: 20,
-    zIndex: 2,
+    zIndex: 10,
   },
 })
