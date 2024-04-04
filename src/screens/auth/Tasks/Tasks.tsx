@@ -32,7 +32,7 @@ const Tasks = () => {
 
   const tasksByCategory = useMemo(
     () => (category === categoriesEnum.all ? tasks : tasks.filter((task) => task.category === category)),
-    [tasks.length, category]
+    [tasks, category]
   )
 
   return (
