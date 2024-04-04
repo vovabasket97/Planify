@@ -1,21 +1,53 @@
 import CategoryList from '@components/CategoryList/CategoryList'
+import Checkbox from '@components/Checkbox/Checkbox'
+import Loader from '@components/Loader'
 import Title from '@components/Title/Title'
-import { categories, categoriesEnum } from '@configs/categories'
-import { FC, useState } from 'react'
-import { View } from 'react-native'
+import { allCategories } from '@configs/categories'
+import firestore from '@react-native-firebase/firestore'
+import { useStore } from '@store/index'
+import { FlatList, Text, View } from 'react-native'
 
 import { styles } from './Tasks.styles'
 
-interface TasksProps {}
+const Tasks = () => {
+  const { tasks, category, setCategory, isLoading } = useStore((store) => ({
+    tasks: store.tasks,
+    category: store.category,
+    setCategory: store.setCategory,
+    isLoading: store.isLoading,
+  }))
 
-const Tasks: FC<TasksProps> = () => {
-  const [category, setCategory] = useState(categoriesEnum.quick)
+  const onToggleTask = (taskId: string, state: boolean) => {
+    firestore()
+      .collection('Tasks')
+      .doc(taskId)
+      .update({
+        checked: state,
+      })
+      .then(() => {
+        console.log('Task updated!')
+      })
+  }
 
   return (
-    <View style={styles.container}>
-      <Title>To do Tasks</Title>
-      <CategoryList style={styles.list} categories={categories} selectedCategory={category} onPress={(item) => setCategory(item)} />
-    </View>
+    <FlatList
+      ListHeaderComponent={
+        <View style={styles.container}>
+          <Title style={styles.margins}>To do Tasks</Title>
+          <CategoryList style={styles.list} categories={allCategories} selectedCategory={category} onPress={(item) => setCategory(item)} />
+        </View>
+      }
+      contentContainerStyle={styles.container}
+      data={tasks}
+      renderItem={({ item }) => (
+        <Checkbox style={styles.margins} value={item.checked} lineThrough onPress={onToggleTask.bind(null, item.uid, !item.checked)}>
+          {item.description}
+        </Checkbox>
+      )}
+      ListFooterComponent={<>{isLoading && <Loader />}</>}
+      ListEmptyComponent={<Text style={styles.noFound}>Tasks not found</Text>}
+      keyExtractor={(item) => item.uid}
+    />
   )
 }
 

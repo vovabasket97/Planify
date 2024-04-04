@@ -34,4 +34,7 @@ export const styles = StyleSheet.create({
   error: {
     color: configStyles.colors.input.error,
   },
+  textDecorationLine: {
+    textDecorationLine: 'line-through',
+  },
 })

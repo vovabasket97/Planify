@@ -1,5 +1,6 @@
 import Button from '@components/Button/Button'
 import Checkbox from '@components/Checkbox/Checkbox'
+import FormControlledElement from '@components/FormControlledElement/FormControlledElement'
 import Input from '@components/Input/Input'
 import { privacy_policy, terms_and_conditions } from '@configs/links'
 import { commonNavigationType } from '@configs/routes'
@@ -104,18 +105,24 @@ const SignUp: FC<SignInProps> = ({ navigation }) => {
                 },
               }}
             />
-            <Checkbox name="privacy" rules={{ required: 'Privacy checkbox is required!' }}>
-              <Text style={styles.terms}>
-                I agree to&nbsp;
-                <Text onPress={() => Linking.openURL(terms_and_conditions)} style={styles.underline}>
-                  Terms and Conditions
-                </Text>{' '}
-                and&nbsp;
-                <Text onPress={() => Linking.openURL(privacy_policy)} style={styles.underline}>
-                  Privacy policy
-                </Text>
-              </Text>
-            </Checkbox>
+            <FormControlledElement
+              name="privacy"
+              rules={{ required: 'Privacy checkbox is required!' }}
+              renderItem={({ value }) => (
+                <Checkbox value={value} onPress={() => methods.setValue('privacy', !value)}>
+                  <Text style={styles.terms}>
+                    I agree to&nbsp;
+                    <Text onPress={() => Linking.openURL(terms_and_conditions)} style={styles.underline}>
+                      Terms and Conditions
+                    </Text>{' '}
+                    and&nbsp;
+                    <Text onPress={() => Linking.openURL(privacy_policy)} style={styles.underline}>
+                      Privacy policy
+                    </Text>
+                  </Text>
+                </Checkbox>
+              )}
+            />
           </View>
           <Button type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
             Create account

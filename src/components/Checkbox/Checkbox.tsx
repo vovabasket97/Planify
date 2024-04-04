@@ -1,45 +1,22 @@
 import { FC, PropsWithChildren } from 'react'
-import { UseControllerProps, useController, useFormContext } from 'react-hook-form'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, StyleProp, Text, View, ViewStyle } from 'react-native'
 
 import { styles } from './Checkbox.styles'
 
-interface CheckboxProps extends UseControllerProps, PropsWithChildren {}
-
-const ControlledCheckbox: FC<CheckboxProps> = (props) => {
-  const formContext = useFormContext()
-  const { formState } = formContext
-
-  const { name, rules, defaultValue, children, ...inputProps } = props
-
-  const { field } = useController({ name, rules, defaultValue })
-
-  const hasError = Boolean(formState?.errors[name])
-
-  return (
-    <View style={styles.wrapper}>
-      <Pressable onPress={() => field.onChange(!field.value)} style={styles.checkboxContainer}>
-        <View style={styles.container}>{field.value && <View style={styles.innerSquare} />}</View>
-        {children}
-      </Pressable>
-
-      {hasError && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.error}>{(formState.errors[name]?.message as string) || 'Something unexpected happened'}</Text>
-        </View>
-      )}
-    </View>
-  )
+interface CheckboxProps extends PropsWithChildren {
+  onPress?: () => void
+  value: boolean
+  style?: StyleProp<ViewStyle>
+  lineThrough?: boolean
 }
 
-const Checkbox: FC<CheckboxProps> = (props) => {
-  const { name } = props
-
-  const formContext = useFormContext()
-
-  if (!formContext || !name) return null
-
-  return <ControlledCheckbox {...props} />
+const Checkbox: FC<CheckboxProps> = ({ onPress, value, children, style, lineThrough }) => {
+  return (
+    <Pressable onPress={onPress} style={[styles.checkboxContainer, style]}>
+      <View style={styles.container}>{value && <View style={styles.innerSquare} />}</View>
+      <Text style={lineThrough && value && styles.textDecorationLine}>{children}</Text>
+    </Pressable>
+  )
 }
 
 export default Checkbox

@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   list: {},
   item: {
+    fontWeight: '600',
     fontSize: 12,
     color: colors.darkBlue,
   },

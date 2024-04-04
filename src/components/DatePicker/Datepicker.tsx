@@ -1,7 +1,7 @@
 import CalendarIcon from '@assets/CalendarIcon'
 import dayjs from 'dayjs'
 import { FC, useState } from 'react'
-import { Alert, Pressable, Text } from 'react-native'
+import { Pressable, Text } from 'react-native'
 import DatePickerComponent from 'react-native-date-picker'
 
 import { styles } from './Datepicker.styles'
@@ -27,12 +27,6 @@ const Datepicker: FC<DatepickerProps> = ({ date, setDate }) => {
         date={date}
         onConfirm={(newDate) => {
           setOpen(false)
-
-          if (dayjs(newDate).isBefore(dayjs(), 'D')) {
-            Alert.alert('Selected date should be in the future')
-            return null
-          }
-
           setDate(newDate)
         }}
         onCancel={() => {

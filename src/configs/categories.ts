@@ -1,4 +1,5 @@
 export enum categoriesEnum {
+  all = 'All',
   quick = 'Quick Task',
   urgent = 'Urgent',
   important = 'Important',
@@ -15,3 +16,5 @@ export const categories = [
   categoriesEnum.family,
   categoriesEnum.shop,
 ]
+
+export const allCategories = [categoriesEnum.all, ...categories]

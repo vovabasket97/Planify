@@ -21,3 +21,7 @@ yarn start
 ## Login creds
 login: p.ivanchenko@gmail.com
 password: 159357!!
+
+// second user
+login: p.ivanchenko2@gmail.com
+password: 159357!!

@@ -1,18 +1,23 @@
 import Button from '@components/Button/Button'
 import CategoryList from '@components/CategoryList/CategoryList'
 import Datepicker from '@components/DatePicker/Datepicker'
-import FormControlledElement from '@components/FormControlledElement'
+import FormControlledElement from '@components/FormControlledElement/FormControlledElement'
 import Input from '@components/Input/Input'
 import Label from '@components/Label/Label'
 import Title from '@components/Title/Title'
 import { categories, categoriesEnum } from '@configs/categories'
-import { FC, useState } from 'react'
+import { authNavigationType } from '@configs/routes'
+import { AuthContext } from '@context/AuthContext'
+import firestore from '@react-native-firebase/firestore'
+import { StackScreenProps } from '@react-navigation/stack'
+import dayjs from 'dayjs'
+import { FC, useContext, useState } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 
 import { styles } from './AddTask.styles'
 
-interface AddTaskProps {}
+interface AddTaskProps extends StackScreenProps<authNavigationType, 'AddTask'> {}
 
 type FormValues = {
   description: string
@@ -20,8 +25,9 @@ type FormValues = {
   category: categoriesEnum
 }
 
-const AddTask: FC<AddTaskProps> = () => {
-  const [open, setOpen] = useState(false)
+const AddTask: FC<AddTaskProps> = ({ navigation }) => {
+  const { user } = useContext(AuthContext)
+  const [isLoading, setLoading] = useState(false)
   const { ...methods } = useForm<FormValues>({
     mode: 'onChange',
     defaultValues: {
@@ -30,7 +36,24 @@ const AddTask: FC<AddTaskProps> = () => {
   })
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log({ data })
+    setLoading(true)
+    firestore()
+      .collection('Tasks')
+      .add({
+        description: data.description,
+        deadline: dayjs(data.deadline).format('DD-MM-YYYY'),
+        category: data.category,
+        checked: false,
+        userId: user?.uid,
+      })
+      .then(() => {
+        methods.reset()
+        setLoading(false)
+        navigation.navigate('Tasks')
+      })
+      .catch((e) => {
+        Alert.alert(e.message)
+      })
   }
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
@@ -47,7 +70,7 @@ const AddTask: FC<AddTaskProps> = () => {
         <Label label="Type">
           <FormControlledElement
             name="category"
-            defaultValue={categoriesEnum.quick}
+            defaultValue={categoriesEnum.business}
             renderItem={({ value }) => (
               <CategoryList categories={categories} selectedCategory={value} onPress={(item) => methods.setValue('category', item)} />
             )}
@@ -56,10 +79,18 @@ const AddTask: FC<AddTaskProps> = () => {
         <Label label="Deadline">
           <FormControlledElement
             name="deadline"
+            rules={{
+              required: 'Deadline is required!',
+              validate: (value, fields) => {
+                if (dayjs(value).isBefore(dayjs(), 'D')) {
+                  return 'Selected date should be in the future'
+                }
+              },
+            }}
             renderItem={({ value }) => <Datepicker date={value} setDate={(date) => methods.setValue('deadline', date)} />}
           />
         </Label>
-        <Button style={styles.btn} type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
+        <Button loading={isLoading} style={styles.btn} type="secondary" onPress={methods.handleSubmit(onSubmit, onError)}>
           Add the task
         </Button>
       </View>
