@@ -41,7 +41,7 @@ const AddTask: FC<AddTaskProps> = ({ navigation }) => {
       .collection('Tasks')
       .add({
         description: data.description,
-        deadline: dayjs(data.deadline).format('DD-MM-YYYY'),
+        deadline: dayjs(data.deadline).toString(),
         category: data.category,
         checked: false,
         userId: user?.uid,
