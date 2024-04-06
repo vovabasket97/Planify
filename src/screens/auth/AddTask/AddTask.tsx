@@ -10,6 +10,7 @@ import { authNavigationType } from '@configs/routes'
 import { AuthContext } from '@context/AuthContext'
 import firestore from '@react-native-firebase/firestore'
 import { StackScreenProps } from '@react-navigation/stack'
+import { useStore } from '@store/index'
 import dayjs from 'dayjs'
 import { FC, useContext, useState } from 'react'
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
@@ -27,6 +28,7 @@ type FormValues = {
 
 const AddTask: FC<AddTaskProps> = ({ navigation }) => {
   const { user } = useContext(AuthContext)
+  const setCategory = useStore((store) => store.setCategory)
   const [isLoading, setLoading] = useState(false)
   const { ...methods } = useForm<FormValues>({
     mode: 'onChange',
@@ -49,6 +51,7 @@ const AddTask: FC<AddTaskProps> = ({ navigation }) => {
       .then(() => {
         methods.reset()
         setLoading(false)
+        setCategory(data.category)
         navigation.navigate('Tasks')
       })
       .catch((e) => {
